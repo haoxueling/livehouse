@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <title>【cart】livehouse Booking System</title>
+    {% include '../common/css.html' %}
+    {% include '../common/js.html' %}
+</head>
+<body class="productsgrid-page">
+    {% include '../common/header.html' %}
+    {% include '../common/banner2.html' %}
+    <div class="whish-list-section section-padding-bottom">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <section class="section-title">
+                        <h3 class="title" style="border-bottom:0">My Shopping Cart</h3>
+                    </section>
+                </div>
+                <div class="col-12">
+                    <div class="table-responsive" >
+                        <table class="table">
+                            <thead class="thead-light" >
+                                <tr >
+                                    <th class="text-center" scope="col" style="background-color: #16BAAA">No.</th>
+                                    <th class="text-center" scope="col" colspan="2" style="width:40%; background-color: #16BAAA">Product Name</th>
+                                    <th class="text-center" scope="col" style="background-color: #16BAAA">Price</th>
+                                    <th class="text-center" scope="col" style="background-color: #16BAAA">Quantity</th>
+                                    <th class="text-center" scope="col" style="background-color: #16BAAA">Sum</th>
+                                    <th class="text-center" scope="col" style="background-color: #16BAAA">Operation</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% if carts %}
+                                    {% for cart in carts %}
+                                        <tr>
+                                            <td class="text-center"><span class="whish-list-price">{{ forloop.counter }}</span></td>
+                                            <td class="text-center" scope="row">
+                                                <a href="/product/detail?productid={{ cart.productid.id }}"
+                                                    title="{{ cart.productid.productname }}">
+                                                    <img src="{{ cart.productid.image.url }}"
+                                                        alt="{{ cart.productid.productname }}" style="height:100px;overflow: hidden">
+                                                </a>
+                                            </td>
+                                            <td class="">
+                                                <a href="/product/detail?productid={{ cart.productid.id }}"
+                                                    title="{{ cart.productid.productname }}" style="color: inherit;">
+                                                        {{ cart.productid.productname }}
+                                                </a>
+                                            </td>
+                                            <td class="text-center"><span class="whish-list-price">￥{{ cart.productid.price }}</span></td>
+                                            <td class="text-center">
+                                                <div class="product-count style">
+                                                    <div class="count d-flex justify-content-center itemCountTemp">
+                                                        <input type="number" min="1" max="100" step="1"
+                                                            value="{{ cart.count }}" readonly="readonly" data-cartid="{{ cart.id }}">
+                                                        <div class="button-group">
+                                                            <button class="count-btn increment">
+                                                                <span class="ion-chevron-up"></span>
+                                                            </button>
+                                                            <button class="count-btn decrement">
+                                                                <span class="ion-chevron-down"></span>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td class="text-center">
+                                                <span class="whish-list-price" name="productTotal"
+                                                    data-total="{%  widthratio cart.productid.price 1 cart.count %}" >
+                                                    ￥{%  widthratio cart.productid.price 1 cart.count %}
+                                                </span>
+                                            </td>
+                                            <td class="text-center">
+                                                <a href="javascript:cartDelete({{ cart.id }})" title="Delete">
+                                                    <span class="trash"><i class="ion-android-delete"></i></span>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                {% else %}
+                                    <tr><td colspan="7">No data available</td><tr>
+                                {% endif %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="check-out-section section-padding-bottom">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="your-order-area">
+                        <div class="your-order-wrap gray-bg-4">
+                            <div class="your-order-product-info">
+                                <div class="billing-info-wrap">
+                                    <h3 class="title">Cart Checkout</h3>
+                                </div>
+                                <div class="col-lg-5" style="display: inline-block;">
+                                    <div class="your-order-top">
+                                        <ul>
+                                            <li>Quantity：</li>
+                                            <li>{{ carts|length }}</li>
+                                        </ul>
+                                    </div>
+                                    <div class="your-order-bottom">
+                                        <ul>
+                                            <li class="your-order-shipping">CartTotal：</li>
+                                            <li class="your-order-shipping" id="cartTotal">￥0</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                {% if carts %}
+                                    <div class="" style="width:30%;display: inline-block;margin-left:10%">
+                                        <a class="btn btn-dark-ex me-3" href="javascript:$('#form3').submit()">
+                                            &nbsp;&nbsp;PAY&nbsp;&nbsp;
+                                        </a>
+                                    </div>
+                                {% endif %}
+                                </c:if>
+                                <form action="/order/confirm" method="post" id="form3">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="paramFlag" value="cart" />
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% include '../common/footer.html' %}
+</body>
+<script type="text/javascript">
+    //Delete
+    function cartDelete(cartid){
+        if(!doIsLogin())
+            return;
+        layer.confirm("Confirm deletion?",{icon:7,title:"Delete"},function(index){
+           layer.close(index);
+           var data = "cartid="+cartid+"&csrfmiddlewaretoken={{ csrf_token }}";
+           common_ajax_other("/cart/delete",data);
+        });
+    }
+    //cartEdit
+    function cartEdit(cartid,count){
+        if(!doIsLogin())
+            return;
+        var data = "cartid="+cartid+"&count="+count+"&csrfmiddlewaretoken={{ csrf_token }}";
+        common_ajax_other("/cart/edit",data);
+    }
+    //cartTotal
+    $(document).ready(function(){
+        var cartTotal = 0
+        $('span[name="productTotal"]').each(function () {
+            cartTotal+=parseFloat($(this).attr("data-total").replace(",",""));
+        });
+        $("#cartTotal").text("￥"+cartTotal.toFixed(2));
+    });
+</script>
+<script>
+    //itemCount
+    $(".itemCountTemp").each(function() {
+        var g = $(this),
+        j = g.find('input[type="number"]'),
+        cartid = j.attr("data-cartid"),
+        f = g.find(".increment"),
+        k = g.find(".decrement"),
+        l = j.attr("min"),
+        h = j.attr("max");
+        f.on("click",function() {
+            var i = parseFloat(j.val());
+            i = h <= i ? i: i + 1;
+            g.find("input").val(i);
+            g.find("input").trigger("change");
+            cartEdit(cartid,1);
+        }),
+        k.on("click",function() {
+            var i = parseFloat(j.val());
+            i = i <= l ? i: i - 1;
+            g.find("input").val(i);
+            g.find("input").trigger("change");
+            cartEdit(cartid,-1);
+        });
+    });
+</script>
+</html>

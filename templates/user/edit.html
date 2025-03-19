@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <title>【InformationMaintenance】livehouse Booking System</title>
+    {% include '../common/css.html' %}
+    <link rel="stylesheet" type="text/css" href="{% static 'webuploader-0.1.5/webuploader.css' %}">
+    {% include '../common/js.html' %}
+</head>
+<body class="productsgrid-page">
+    {% include '../common/header.html' %}
+    {% include '../common/banner2.html' %}
+    <div class="section-padding-bottom">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <section class="section-title">
+                        <h3 class="title">Personal Information Centre</h3>
+                    </section>
+                </div>
+                {% include '../common/menu.html' %}
+                <div class="col-lg-9 col-12 mb-5">
+                    <div class="tab-content">
+                        <div class="tab-pane fade active show">
+                            <div class="myaccount-content">
+                                <div class="account-details-form">
+                                    <form action="/user/doEdit" method="post" id="form">
+                                        {% csrf_token %}
+                                        <div class="row">
+                                            <div class="col-12" style="margin-bottom:25px">
+                                                <label class="text" style="display: inline-block;width:12%;font-weight: 600;">UserName：</label>
+                                                <input value="{{ user.username }}" type="text" style="display: inline-block;width:60%;"
+                                                    readonly="readonly">
+                                            </div>
+                                            <div class="col-12" style="margin-bottom:25px">
+                                                <label class="text" style="display: inline-block;width:12%;font-weight: 600;">Email：</label>
+                                                <input id="email" name="email" value="{{ user.email }}" maxlength="255"
+                                                    placeholder="Please enter your email" type="text" style="display: inline-block;width:60%;">
+                                            </div>
+                                            <div class="col-12" style="margin-bottom:25px">
+                                                <label class="text" style="display: inline-block;width:12%;font-weight: 600;">Image：</label>
+                                                <div style="display: inline-block;width:60%;">
+                                                    <input name="header" type="hidden" id="header"
+                                                       value="{{ user.header }}" data-url="{{ user.header.url }}"/>
+                                                    <div id="uploader_header">
+                                                        <!--Used to store file information-->
+                                                        <div id="thelist_header" class="uploader-list"></div>
+                                                        <div class="btns">
+                                                            <div id="picker_header">Select Image</div>
+                                                            <button id="ctlBtn_header" class="btn btn-default" type="button"
+                                                                style="padding: .375rem .75rem;border-radius: 0;
+                                                                font-weight:normal;background-color:#ebebeb">Start Uploading</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-12" style="margin-top:30px">
+                                                <button type="button" id="submitBtn" class="btn btn-dark-ex">&nbsp;&nbsp;Submit&nbsp;&nbsp;</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% include '../common/footer.html' %}
+</body>
+<script type="text/javascript" src="{% static 'webuploader-0.1.5/webuploader.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/uploadfile.js' %}"></script>
+<script>
+    $(function(){
+        uploadImage("/upload","header","{{ csrf_token }}");
+
+        $("#submitBtn").on("click",function(){
+            var temp = true;
+            $("#form").find("input[type='text']").each(function(){
+                if($(this).val()==null || $(this).val()==""){
+                    temp = false;
+                    return false;
+                }
+            });
+            if(!temp){
+                layer.msg("Data cannot be empty!");return false;
+            }
+            //Verification of e-mail
+            var emailreg = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
+            if(!emailreg.test($("#email").val())){
+                layer.msg("Incorrect mailbox format!");return false;
+            }
+            if($("#header").val()==null || $("#header").val()==""){
+                layer.msg("Please upload pictures!");return false;
+            }
+            common_ajax_other($("#form").attr("action"),$("#form").serialize());
+        });
+    });
+</script>
+</html>

@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="80bdd2a4-1bb8-4fc9-92eb-ef485f5e397d" name="Default Changelist" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="DjangoConsoleOptions" custom-start-script="import sys; print('Python %s on %s' % (sys.version, sys.platform))&#10;import django; print('Django %s' % django.get_version())&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;if 'setup' in dir(django): django.setup()&#10;import django_manage_shell; django_manage_shell.run(PROJECT_ROOT)">
+    <option name="myCustomStartScript" value="import sys; print('Python %s on %s' % (sys.version, sys.platform))&#10;import django; print('Django %s' % django.get_version())&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;if 'setup' in dir(django): django.setup()&#10;import django_manage_shell; django_manage_shell.run(PROJECT_ROOT)" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="HTML File" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 6
+}</component>
+  <component name="ProjectId" id="1zVICAoHHY2mMh8iQsI6Hs1oAlT" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
+    &quot;Django Server.Django.executor&quot;: &quot;Run&quot;,
+    &quot;Django Server.LiveHouse.executor&quot;: &quot;Run&quot;,
+    &quot;Django Server.WebShopRSMPython.executor&quot;: &quot;Run&quot;,
+    &quot;Django 服务器.WebShopRSMPython.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.OpenDjangoStructureViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;django.template.preview.state&quot;: &quot;SHOW_EDITOR&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/Gaoqixian/Desktop/bs/咸鱼/无人超市/graduation-design-python-autoSupermarket/backend&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.sourceCode.HTML&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Gaoqixian\Desktop\bs\大连海洋大学\基于Django的Live House订票系统的设计与实现\livehouse\static\images" />
+      <recent name="E:\person\毕业设计文档\WebShopRSMPython\WebShopRSMPython\templates\common" />
+      <recent name="E:\person\毕业设计文档\WebShopRSMPython\WebShopRSMPython\static\images" />
+      <recent name="E:\person\毕业设计文档\WebShopRSMPython\WebShopRSMPython\templates\perform" />
+      <recent name="E:\person\毕业设计文档\WebShopRSMPython\WebShopRSMPython\templates\perform\index" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="E:\person\毕业设计文档\livehouse\livehouse\static\images" />
+      <recent name="C:\Users\Gaoqixian\Desktop\bs\大连海洋大学\基于协同过滤算法的穿搭推荐系统的设计与实现\WebShopRSMPython1.0\WebShopRSMPython\static\images" />
+      <recent name="C:\Users\Gaoqixian\Desktop\bs\大连海洋大学\基于协同过滤算法的穿搭推荐系统的设计与实现\WebShopRSMPython1.0\WebShopRSMPython\apps" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="Django" type="Python.DjangoServer" factoryName="Django server">
+      <module name="WebShopRSMPython" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+        <env name="DJANGO_SETTINGS_MODULE" value="WebShopRSMPython.settings" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="SDK_NAME" value="Python 3.9 (livehouse)" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="launchJavascriptDebuger" value="false" />
+      <option name="port" value="8000" />
+      <option name="host" value="localhost" />
+      <option name="additionalOptions" value="" />
+      <option name="browserUrl" value="" />
+      <option name="runTestServer" value="false" />
+      <option name="runNoReload" value="false" />
+      <option name="useCustomRunCommand" value="false" />
+      <option name="customRunCommand" value="" />
+      <method v="2" />
+    </configuration>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-python-sdk-5a2391486177-2887949eec09-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-233.13763.11" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="80bdd2a4-1bb8-4fc9-92eb-ef485f5e397d" name="Default Changelist" comment="" />
+      <created>1634226698081</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1634226698081</updated>
+      <workItem from="1634226700779" duration="2960000" />
+      <workItem from="1634263598862" duration="18235000" />
+      <workItem from="1634314121694" duration="3075000" />
+      <workItem from="1657183250575" duration="387000" />
+      <workItem from="1688650879921" duration="1507000" />
+      <workItem from="1709039132541" duration="1533000" />
+      <workItem from="1709040708461" duration="211000" />
+      <workItem from="1709041558815" duration="9498000" />
+      <workItem from="1709085692867" duration="42000" />
+      <workItem from="1709100099016" duration="838000" />
+      <workItem from="1709111061662" duration="2552000" />
+      <workItem from="1709133995170" duration="37000" />
+      <workItem from="1709134185565" duration="5000" />
+      <workItem from="1709621495525" duration="5495000" />
+      <workItem from="1709628245019" duration="2000" />
+      <workItem from="1709632897509" duration="8641000" />
+      <workItem from="1709653516633" duration="1455000" />
+      <workItem from="1709658807203" duration="601000" />
+      <workItem from="1709689432734" duration="669000" />
+      <workItem from="1709691744568" duration="16000" />
+      <workItem from="1709997806402" duration="8320000" />
+      <workItem from="1710145996800" duration="17000" />
+      <workItem from="1710232965943" duration="5977000" />
+      <workItem from="1710242121432" duration="59000" />
+      <workItem from="1710554041435" duration="32218000" />
+      <workItem from="1710600077022" duration="14462000" />
+      <workItem from="1710623386414" duration="7926000" />
+      <workItem from="1710655213420" duration="12059000" />
+      <workItem from="1710671207640" duration="2031000" />
+      <workItem from="1713363354477" duration="2120000" />
+      <workItem from="1713397235213" duration="1240000" />
+      <workItem from="1715230275335" duration="867000" />
+      <workItem from="1715259322755" duration="142000" />
+      <workItem from="1716862847139" duration="1262000" />
+      <workItem from="1716884133494" duration="483000" />
+      <workItem from="1719019961777" duration="2191000" />
+      <workItem from="1719132637021" duration="21000" />
+      <workItem from="1725919914351" duration="102000" />
+      <workItem from="1727521540081" duration="77000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="django-line">
+          <url>file://$PROJECT_DIR$/templates/product/detail.html</url>
+          <line>128</line>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/templates/common/js.html</url>
+          <line>10</line>
+          <option name="timeStamp" value="3" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+</project>

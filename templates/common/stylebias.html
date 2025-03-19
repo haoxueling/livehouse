@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<script src="{% static './js/echarts.js' %}"></script>
+<head>
+    <meta charset="UTF-8">
+    <title>【Visualisation Chart】livehouse Booking System</title>
+    {% include '../common/css.html' %}
+    {% include '../common/js.html' %}
+</head>
+<body class="productsgrid-page" style="width: 100%;height: 100%;">
+<div class="section-padding-bottom mt-xxl-5">
+    <div class="container" style="width: 100% !important;">
+        <div class="row">
+            <div class="col-24">
+                <div id="main" style="display: flex; flex-direction: column; align-items: center; margin-top: 10px;width: 100%">
+                    <div id="charts" style="display: flex;">
+                        <div id="left" style="width: 600px; height: 350px;"></div>
+                        <div id="right" style="margin-left: 50px; width: 600px; height: 350px;"></div>
+                    </div>
+                    <div id="bottom" style="width: 100%; height: 400px; margin-top: 50px;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    var myData = JSON.parse('{{ my_data|escapejs }}');
+    console.log(myData);  // Check that the data is loaded correctly into the JavaScript variable.
+    var myListCount = [];
+    var myListTypeName = [];
+    var countAndTypename = [];
+    Object.keys(myData).forEach(function(key) {
+        var value = myData[key];
+        myListTypeName.push(key);
+        myListCount.push(value);
+        countAndTypename.push({value: value, name: key});
+        console.log('key:', key, 'value:', value);
+        console.log(myListTypeName);
+        console.log(myListCount);
+        console.log(countAndTypename);
+    });
+
+    // Horizontal bar charts and line graphs
+    var myChart_1 = echarts.init(document.getElementById('left'));
+    var option1 = {
+        title: {
+            text: 'Horizontal bar charts and line graphs',
+            left: 'center',
+            textStyle: {
+                fontSize: 18
+            }
+        },
+        tooltip: {
+            trigger: 'axis'
+        },
+        legend: {
+            data: ['trend value', 'folding trend'],
+            bottom: 0
+        },
+        xAxis: {
+            type: 'value'
+        },
+        yAxis: {
+            type: 'category',
+            data: myListTypeName,
+            axisLabel: {
+                fontSize: 12
+            }
+        },
+        series: [
+            {
+                name: 'trend value',
+                type: 'bar',
+                itemStyle: {
+                    borderRadius: 5,
+                    color: '#5470C6'
+                },
+                data: myListCount
+            },
+            {
+                name: 'folding trend',
+                type: 'line',
+                data: myListCount,
+                itemStyle: {
+                    color: '#EE6666'
+                },
+                lineStyle: {
+                    width: 3
+                },
+                symbolSize: 8,
+                smooth: true
+            }
+        ]
+    };
+    myChart_1.setOption(option1);
+
+    // Circular Pie Chart
+    var myChart_2 = echarts.init(document.getElementById('right'));
+    var option2 = {
+        title: {
+            text: 'Classification trend values',
+            left: 'center',
+            textStyle: {
+                fontSize: 18
+            }
+        },
+        tooltip: {
+            trigger: 'item'
+        },
+        legend: {
+            top: 'bottom'
+        },
+        series: [
+            {
+                name: 'Trend values by classification',
+                type: 'pie',
+                radius: '55%',
+                center: ['50%', '50%'],
+                label: {
+                    fontSize: 12,
+                    formatter: '{b}: {d}%'
+                },
+                itemStyle: {
+                    borderRadius: 8,
+                },
+                data: countAndTypename
+            }
+        ]
+    };
+    myChart_2.setOption(option2);
+
+    // line graph
+    var myChart_3 = echarts.init(document.getElementById('bottom'));
+    var option3 = {
+        title: {
+            text: 'line graph',
+            left: 'center',
+            textStyle: {
+                fontSize: 18
+            }
+        },
+        tooltip: {
+            trigger: 'axis'
+        },
+        legend: {
+            data: ['trend value'],
+            bottom: 0
+        },
+        xAxis: {
+            type: 'category',
+            data: myListTypeName,
+            axisLabel: {
+                rotate: 45,
+                fontSize: 12
+            }
+        },
+        yAxis: {
+            type: 'value'
+        },
+        series: [
+            {
+                name: 'trend value',
+                type: 'line',
+                data: myListCount,
+                itemStyle: {
+                    color: '#5470C6'
+                },
+                lineStyle: {
+                    width: 3
+                },
+                symbolSize: 8,
+                smooth: true
+            }
+        ]
+    };
+    myChart_3.setOption(option3);
+</script>
+</body>
+</html>

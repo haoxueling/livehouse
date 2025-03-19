@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <title>【Register】livehouse Booking System</title>
+    {% include '../common/css.html' %}
+    {% include '../common/js.html' %}
+</head>
+<body class="productsgrid-page">
+    {% include '../common/header.html' %}
+    {% include '../common/banner2.html' %}
+    <div class="login-register-area section-padding-bottom">
+        <div class="container" style="height: calc(100vh - 270px);">
+            <div class="row h-100 align-items-center">
+                <div class="col-lg-7 col-md-12 mx-auto">
+                    <div class="login-register-wrapper">
+                        <div class="tab-content">
+                            <div class="tab-pane show active">
+                                <div class="login-form-container">
+                                    <div class="login-register-form">
+                                        <form action="/doRegister" method="post" id="form">
+                                            {% csrf_token %}
+                                            <div class="text-center mb-4 d-flex justify-content-center align-items-center">
+                                                <img style="width: 40px;height: 40px;margin-right: 10px" src="{% static 'images/logo.png' %}" alt="livehouse Booking System Login"/>
+                                                <h3>livehouse Booking System Register</h3>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="text" style="display: inline-block;width:15%;color: #666;font-weight: 600;">UserName：</label>
+                                                <input name="username" id="username" maxlength="255" type="text" placeholder="Please enter your username"
+                                                       class="input-text" style="display: inline-block;width:80%;">
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="text" style="display: inline-block;width:15%;color: #666;font-weight: 600;">Password：</label>
+                                                <input name="password" id="password" maxlength="255" type="password" placeholder="Please enter your password"
+                                                       class="input-text" style="display: inline-block;width:80%">
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="text" style="display: inline-block;width:15%;color: #666;font-weight: 600;">Confirm Password：</label>
+                                                <input name="passwordConf" id="passwordConf" maxlength="255" type="password" placeholder="Please enter the confirmation password"
+                                                       class="input-text" style="display: inline-block;width:80%">
+                                            </div>
+                                            <div class="text-center">
+                                                <a href="javascript:void(null)" id="submitBtn" class="btn btn-dark-ex"><span>&nbsp;&nbsp;Register&nbsp;&nbsp;</span></a>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% include '../common/footer.html' %}
+</body>
+<script>
+    jQuery(document).ready(function() {
+        $("#submitBtn").on("click",function(){
+            var temp = true;
+            $("#form input").each(function(){
+                if($(this).val()==null || $(this).val()==""){
+                    temp = false;
+                    return false;
+                }
+            });
+            if(!temp){
+                layer.msg("Data cannot be empty!");
+            }else{
+                if($("#password").val()!=$("#passwordConf").val()){
+                    layer.msg("Two passwords don't match!");return;
+                }
+                common_ajax_other($("#form").attr("action"),$("#form").serialize());
+            }
+        });
+    });
+</script>
+</html>

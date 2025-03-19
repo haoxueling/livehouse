@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <title>【PersonalInformationCentre】livehouse Booking System</title>
+    {% include '../common/css.html' %}
+    {% include '../common/js.html' %}
+</head>
+<body class="productsgrid-page">
+    {% include '../common/header.html' %}
+    {% include '../common/banner2.html' %}
+    <div class="section-padding-bottom">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <section class="section-title">
+                        <h3 class="title">Personal Information Centre</h3>
+                    </section>
+                </div>
+                {% include '../common/menu.html' %}
+                <div class="col-lg-9 col-12 mb-5">
+                    <div class="tab-content">
+                        <div class="tab-pane fade active show">
+                            <div class="myaccount-content">
+                                <div class="account-details-form">
+                                    <form action="" method="post" id="form">
+                                        <div class="row">
+                                            <div class="col-12" style="margin-bottom:25px">
+                                                <label class="text" style="display: inline-block;width:12%;font-weight: 600;">Username：</label>
+                                                {{ user.username }}
+                                            </div>
+                                            <div class="col-12" style="margin-bottom:25px">
+                                                <label class="text" style="display: inline-block;width:12%;font-weight: 600;">Email：</label>
+                                                {{ user.email }}
+                                            </div>
+                                            <div class="col-12" style="margin-bottom:25px">
+                                                <label class="text" style="display: inline-block;width:12%;font-weight: 600;">Image：</label>
+                                                <div style="display: inline-block;width:60%;">
+                                                    <img src="{{ user.header.url }}" style="width:100px;height:100px">
+                                                </div>
+                                            </div>
+                                            <div class="col-12" style="margin-bottom:25px">
+                                                <label class="text" style="display: inline-block;width:12%;font-weight: 600;">CreateTime：</label>
+                                                {{ user.createtime }}
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% include '../common/footer.html' %}
+</body>
+</html>

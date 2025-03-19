@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <title>【MyTicket】livehouse Booking System</title>
+    {% include '../common/css.html' %}
+    {% include '../common/js.html' %}
+</head>
+<body class="productsgrid-page">
+    {% include '../common/header.html' %}
+    {% include '../common/banner2.html' %}
+    <div class="whish-list-section section-padding-bottom">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <section class="section-title">
+                        <h3 class="title" style="border-bottom:0">Personal Information Centre</h3>
+                    </section>
+                </div>
+                {% include '../common/menu.html' %}
+                <div class="col-lg-9 col-12 mb-5">
+                    <div class="tab-content">
+                        <div class="tab-pane fade active show">
+                            <div class="myaccount-content">
+                                <div class="table-responsive">
+                                    <table class="table">
+                                        <thead class="thead-light">
+                                            <tr>
+                                                <th scope="col" style="background-color: #16BAAA">Name</th>
+                                                <th scope="col" style="background-color: #16BAAA">PaymentStatus</th>
+                                                <th scope="col" style="background-color: #16BAAA">Price</th>
+                                                <th scope="col" style="background-color: #16BAAA">BookingTime</th>
+                                                <th scope="col" style="background-color: #16BAAA">UsageStatus</th>
+                                                <th scope="col" style="background-color: #16BAAA">Operation</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% if pageBean %}
+                                                {% for obj in pageBean %}
+                                                    <tr>
+                                                        <td>{{ obj.ticket.name }}</td>
+                                                        <td>
+                                                             {% if obj.booking.payment_status == 'pending' %}
+                                                                    Pending
+                                                             {% elif obj.booking.payment_status == 'paid' %}
+                                                                    Paid
+                                                             {% elif obj.booking.payment_status == 'failed' %}
+                                                                 Failed
+                                                            {% endif %}
+                                                        </td>
+                                                        <td>￥{{ obj.booking.total_price }}</td>
+                                
+                                                        <td>{{ obj.booking.booking_date }}</td>
+                                                        <td>
+                                                            {% if obj.booking.is_used %}
+                                                                    Used
+                                                             {% else %}
+                                                                    To be used
+                                                            {% endif %}
+                                                        </td>
+                                                        <td>
+                                                            <a href="/perform/booking/detail?booking_id={{ obj.booking.id }}" title="Detail">
+                                                                <span class="trash"><i class="icon ion-ios-information"></i></span>
+                                                            </a>
+                                                            {% if obj.booking.payment_status == 'pending' %}
+                                                                &nbsp;&nbsp;
+                                                                <a href="javascript:deleteBooking({{ obj.booking.id }})" title="Delete">
+                                                                    <span class="trash"><i class="ion-android-delete"></i></span>
+                                                                </a>
+                                                                &nbsp;&nbsp;
+                                                                <a href="/perform/booking/pay?booking_id={{ obj.booking.id }}">
+                                                                    Pay
+                                                                </a>
+                                                            {% endif %}
+                                                        </td>
+                                                    </tr>
+                                                {% endfor %}
+                                            {% else %}
+                                                <tr><td colspan="5">No data available</td><tr>
+                                            {% endif %}
+                                        </tbody>
+                                    </table>
+                                    <form action="/perform/booking/list" method="post" id="form">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="page" value="{{ page }}" id="page"/>
+                                    </form>
+                                    {% include '../common/page.html' %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% include '../common/footer.html' %}
+</body>
+<script>
+    //deleteBooking
+    function deleteBooking(booking_id){
+        layer.confirm("Confirm Delete？",{icon:7,title:"Delete"},function(index){
+            layer.close(index);
+            common_ajax_other("/perform/booking/deleteBooking","booking_id="+booking_id+"&csrfmiddlewaretoken={{ csrf_token }}");
+        });
+    }
+</script>
+</html>

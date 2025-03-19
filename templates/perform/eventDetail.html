@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <title>【ProductDetails】livehouse Booking System</title>
+    {% include '../common/css.html' %}
+    {% include '../common/js.html' %}
+    <style type="text/css">
+        .progress .bar {
+            float: left;
+            width: 0;
+            height: 100%;
+            font-size: 12px;
+            color: #fff;
+            text-align: center;
+            text-shadow: 0 -1px 0 rgba(0,0,0,0.25);
+            background-color: #faa732;
+            background-image: -moz-linear-gradient(top, #149bdf, #0480be);
+            background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#149bdf), to(#0480be));
+            background-image: -webkit-linear-gradient(top, #149bdf, #0480be);
+            background-image: -o-linear-gradient(top, #149bdf, #0480be);
+            background-image: linear-gradient(to bottom, #faa732, #faa732);
+            background-repeat: repeat-x;
+            filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff149bdf', endColorstr='#ff0480be', GradientType=0);
+            -webkit-box-shadow: inset 0 -1px 0 rgba(0,0,0,0.15);
+            -moz-box-shadow: inset 0 -1px 0 rgba(0,0,0,0.15);
+            box-shadow: inset 0 -1px 0 rgba(0,0,0,0.15);
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+            -webkit-transition: width .6s ease;
+            -moz-transition: width .6s ease;
+            -o-transition: width .6s ease;
+            transition: width .6s ease;
+        }
+    </style>
+</head>
+<body class="productsgrid-page">
+    {% include '../common/header.html' %}
+    {% include '../common/banner2.html' %}
+    <section>
+        <div class="container">
+            <div class="row mb-n4">
+                <div class="col-12">
+                    <section class="section-title">
+                        <h3 class="title">Show Information</h3>
+                    </section>
+                </div>
+                <div class="col-lg-3" style="margin-right:20px">
+                    <div class="modal-gallery-slider">
+                        <div class="gallery">
+                            <div class="">
+                                <div class="">
+                                    <div class="" style="max-width: 300px;overflow: hidden;">
+                                        <img src="{{ product.image.url }}"
+                                            title="{{ product.name }}">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-5 mb-4">
+                    <div class="modal-product-des">
+                        <h3 class="modal-product-title">
+                            <a href="javascript:void(null)">{{ product.name }}</a>
+                        </h3>
+                        <div class="product-add-to-cart">
+                            <span class="control-label">Typename：{{ product.typeId.typename }}</span>
+                            <span class="control-label">Price：￥{{ product.price }}</span>
+                            <span class="control-label">CreateTime：{{ product.createTime }}</span>
+                            <span class="control-label">Time：{{ product.startTime }} ~ {{ product.endTime }}</span>
+                            <div class="product-variants" style="margin-bottom:0px">
+                                <div class="product-variants-item">
+                                    <span class="control-label">Quantity：{{ product.quantity }}</span>
+                                </div>
+                                <div class="product-variants-item">
+                                    <span class="control-label">PurchasedTickets：{{ product.volume}}</span>
+                                </div>
+                            </div>
+                            <div class="product-add-to-cart">
+                                <div class="product-count style d-flex my-4">
+                                    <div class="count d-flex itemCountTemp">
+                                        <form action="/perform/booking/confirm" method="post" id="form4" class="row" style="">
+                                            {% csrf_token %}
+                                            <input type="hidden" name="ticket_id" value="{{ product.id }}" />
+                                        </form>
+                                    </div>
+                                    <div>
+                                        <button class="btn btn-dark-ext" onclick="buy()">Buy Tickets Now</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 mb-4">
+                    <div class="modal-product-des">
+                        <h3 class="modal-product-title">
+                            <span>Site Notes</span>
+                        </h3>
+                        <div class="product-add-to-cart">
+                            <span class="control-label"><span class="fw-bold">1. Be on time:</span>It is recommended to arrive at the concert hall at least 30 minutes in advance so that you can find your seat comfortably and avoid the embarrassment of arriving late and disturbing other audience members.</span>
+                            <span class="control-label"><span class="fw-bold">2.Mute mobile phone：</span>Before the concert starts, please make sure that your mobile phone is put on silent or switched off to avoid the sound of ringing or vibrating mobile phones interrupting the concert.</span>
+                            <span class="control-label"><span class="fw-bold">3.Avoid late entry：</span>If arriving late, please enter during a music break or after a track has finished so as not to disturb the performance in progress.</span>
+                            <span class="control-label"><span class="fw-bold">4.Keep it quiet：</span>During the concert, please be quiet and do not talk, eat or make any other noise. This is a sign of respect for both the performers and the rest of the audience.</span>
+                            <span class="control-label"><span class="fw-bold">5.Well-dressed：</span>While there is usually no strict dress code for concerts, it is recommended that relatively formal and comfortable attire be worn to show respect for the performance.</span>
+{#                            <span class="control-label"><span class="fw-bold">6.Avoid taking photographs and videos：</span>During the concert, please avoid taking photos and videos that may disturb the attention of the performers and the audience. If you do need to take photos, please be sure to turn off your flash and keep a low profile.</span>#}
+{#                            <span class="control-label"><span class="fw-bold">7.Respectful Applause Etiquette：</span>Normally, the audience applauds in appreciation after a track is finished. If the programme contains more than one movement, please wait until the end of the entire programme before applauding.</span>#}
+{#                            <span class="control-label"><span class="fw-bold">8.Get to know the tracks in advance：</span>Knowing the concert's repertoire ahead of time will help you better appreciate the performance and empathise with the rest of the audience.</span>#}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <div class="">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <section class="section-title">
+                        <h3 class="title">Recommended</h3>
+                    </section>
+                </div>
+                <div class="col-12">
+                    <div class="tab-content">
+                        <div class="tab-pane show active">
+                            <div class="row grid-view mb-n5">
+                                {% if relateProducts %}
+                                    {% for relateProduct in relateProducts %}
+                                        <div class="col-sm-6 col-md-4 col-lg-3 mb-5" style="width:20%">
+                                            <div class="product-card">
+                                                <a href="/perform/event/detail?productid={{ relateProduct.id }}" title="{{ relateProduct.name }}"
+                                                    class="product-thumb" style="height:204px;overflow: hidden">
+                                                    <img src="{{ relateProduct.image.url }}"
+                                                        alt="{{ relateProduct.name }}" style="">
+                                                </a>
+                                                <div class="product-content">
+                                                    <h4>
+                                                        <a href="/perform/event/detail?productid={{ relateProduct.id }}" title="{{ relateProduct.name }}"
+                                                            class="product-title">
+                                                            {% if relateProduct.name|length > 8 %}
+                                                                {{ relateProduct.name|slice:'8' }}...
+                                                            {% else %} {{ relateProduct.name }} {% endif %}
+                                                        </a>
+                                                    </h4>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    {% endfor %}
+                                {% else %}
+                                    No data available
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% include '../common/footer.html' %}
+</body>
+<script src="{% static 'js/jquery.raty.min.js' %}"></script>
+<script type="text/javascript">
+    //Buy Now
+    function buy(){
+        if(!doIsLogin())
+            return;
+        $("#form4").submit();
+    }
+
+
+    //Collect
+    function doCollect(productid){
+        if(doIsLogin()){
+            var data = "productid={{ product.id }}"+"&csrfmiddlewaretoken={{ csrf_token }}";
+            common_ajax_other("/collection/doCollection",data);
+        }
+    }
+    //comment
+    function doComment(){
+        var comment = $("#comment").val();
+        if(comment==null || comment==""){
+            layer.msg("Comments cannot be empty！");
+            return false;
+        }
+        if(doIsLogin()){
+            var data = "productid={{ product.id }}"+"&content="+comment+"&csrfmiddlewaretoken={{ csrf_token }}";
+            common_ajax_other("/comment/doComment",data);
+        }
+    }
+</script>
+<script>
+    //Quantity Purchased
+    $(".itemCountTemp").each(function() {
+        var g = $(this),
+        j = g.find('input[type="number"]'),
+        f = g.find(".increment"),
+        k = g.find(".decrement"),
+        l = j.attr("min"),
+        h = j.attr("max");
+        f.on("click",function() {
+            var i = parseFloat(j.val());
+            i = h <= i ? i: i + 1,
+            g.find('input[type="number"]').val(i),
+            g.find('input[type="number"]').trigger("change")
+        }),
+        k.on("click",function() {
+            var i = parseFloat(j.val());
+            i = i <= l ? i: i - 1,
+            g.find('input[type="number"]').val(i),
+            g.find('input[type="number"]').trigger("change")
+        });
+    });
+</script>
+</html>

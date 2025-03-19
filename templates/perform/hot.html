@@ -1,0 +1,45 @@
+<div class="shop-page-layout section-padding-bottom" style="margin-top: 25px;">
+	<div class="container">
+		<div class="row">
+			<div class="col-12">
+				<section class="section-title">
+					<h3 class="title">Popular Shows</h3>
+				</section>
+			</div>
+			<div class="col-12">
+				<div class="tab-content">
+					<div class="tab-pane show active">
+						<div class="row grid-view mb-n5">
+							{% if hotProducts %}
+                                {% for product in hotProducts %}
+                                    <div class="col-sm-6 col-md-4 col-lg-3 mb-5" style="width:20%">
+                                        <div class="product-card">
+                                            <a href="/perform/event/detail?productid={{ product.id }}" title="{{ product.name }}"
+                                                class="product-thumb" style="height:204px;overflow: hidden">
+                                                <img src="{{ product.image.url }}"
+                                                    alt="{{ product.name }}" style="">
+                                            </a>
+                                            <div class="product-content">
+                                                <h4>
+                                                    <a href="/perform/event/detail?productid={{ product.id }}" title="{{ product.name }}"
+                                                        class="product-title">
+                                                        {% if product.name|length > 8 %}
+                                                            {{ product.name|slice:'8' }}...
+                                                        {% else %} {{ product.name }} {% endif %}
+                                                    </a>
+                                                </h4>
+                                                <h5 style="font-size: 14px;">￥{{ product.price }}</h5>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            {% else %}
+                                No data available
+                            {% endif %}
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

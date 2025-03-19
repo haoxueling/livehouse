@@ -1,0 +1,58 @@
+{% load static %}
+<script src="{% static 'js/jquery-1.12.4.min.js' %}"></script>
+<script src="{% static 'layer/layer.js' %}"></script>
+<script src="{% static 'js/common.js' %}"></script>
+<!--  layui.js -->
+<script src="//unpkg.com/layui@2.9.7/dist/layui.js"></script>
+<script>
+    var globalTimeout = 800;
+    var isLoginGlobal = Boolean("{{ request.session.session_user_isLogin }}");
+    //Login tips
+	function doIsLogin(){
+		if(!isLoginGlobal){
+			layer.open({
+			  type: 1,
+			  skin: '', 
+			  shade: 0.4,
+              shadeClose: true,
+			  title: "Please login first", 
+			  area: ['450px', '300px'], 
+			  content: '<div style="width:100%;height:100%;vertical-align: middle;text-align: center;" align="center">' +
+                  '<span class="sign__text" style="margin-top: 40px;display: inline-block;">' +
+                        'Existing account? <a href="/login">Click to login!</a></span>' + '&nbsp;&nbsp;&nbsp;&nbsp;' +
+                  '<span class="sign__text" style="margin-top: 40px;display: inline-block;">' +
+                        'No account? <a href="/register">Click to register!</a></span></div>'
+			});
+		}
+		return isLoginGlobal;
+	}
+	//add to cart
+	$(function(){
+		$(".addCart").click(function(){
+			if(!doIsLogin())
+				return;
+			var productid = $(this).attr("data-itemid");
+			var itemcount = $("#count").val();
+			if(itemcount==null || itemcount==""){
+				itemcount = 1;
+			}
+		    common_ajax_other("/cart/add",
+				"productid="+productid+"&count="+itemcount+"&csrfmiddlewaretoken={{ csrf_token }}");
+		});
+	});
+	//Query the number of shopping carts of currently logged-in users
+	$(function(){
+		if(isLoginGlobal){
+			loadCartItemCount();
+		}
+	});
+	//Get the number of items in the shopping cart method
+	function loadCartItemCount(){
+		common_ajax_self_result('/cart/cartItemCount',
+	    	"&csrfmiddlewaretoken={{ csrf_token }}",loadCartItemCountCallbackSuccess)
+	}
+	
+    function loadCartItemCountCallbackSuccess(data){
+        $("#cartItemCount").text(data.cartItemCount.count);
+    }
+</script>

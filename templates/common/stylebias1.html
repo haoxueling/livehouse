@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<script src="{% static './js/echarts.js' %}"></script>
+<head>
+    <meta charset="UTF-8">
+    <title>Visualisation Chart】livehouse Booking System</title>
+    {% include '../common/css.html' %}
+    {% include '../common/js.html' %}
+</head>
+<body class="productsgrid-page">
+{% include '../common/header.html' %}
+{% include '../common/banner2.html' %}
+<div class="section-padding-bottom">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <section class="section-title">
+                    <h3 class="title">Visualisation Charts</h3>
+                </section>
+                <div id="main" style="display: flex; margin-top: 10px">
+                    <div id="left" style="width: 600px;height:500px;"></div>
+                    <div id="right" style="margin-left: 150px;width: 600px;height:500px;"></div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+{% include '../common/footer.html' %}
+
+<script type="text/javascript">
+    
+     var myData = JSON.parse('{{ my_data|escapejs }}');
+    console.log(myData);  // Check that the data is correctly loaded into the JavaScript variable
+     var myListCount = [];
+     var myListTypeName = [];
+     var countAndTypename = [];
+    Object.keys(myData).forEach(function(key) {
+    var value = myData[key];
+    myListTypeName.push(key);
+    myListCount.push(value);
+    countAndTypename.push({value:value,name:key});
+    console.log('key:', key, 'value:', value);
+    console.log(myListTypeName);
+    console.log(myListCount);
+    console.log(countAndTypename);
+});
+    // Initialise the echarts instance based on the prepared dom
+    var myChart_1 = echarts.init(document.getElementById('left'));
+
+    // Specify the configuration items and data for the chart
+    var option = {
+        title: {
+            text: 'Favourite types of bar charts'
+        },
+        tooltip: {},
+        legend: {
+            data: ['Favourite column trend values']
+        },
+        xAxis: {
+            data: myListTypeName
+        },
+        yAxis: {},
+        series: [
+            {
+                name: 'trend value',
+                type: 'bar',
+                itemStyle: {
+                
+                borderRadius: 5,
+                // Set the colour of each column, which can be customised using the function
+                color: function(params) {
+                    var colorList = ['#00c0ff','#00ff20','#ffc040','#40ff80','#a0c0ff','#8080ff','#99FFFF','#ffa0a0','#0080ff','#ff8020'];
+                    return colorList[params.dataIndex];
+                }
+            },
+                data: myListCount
+            }
+        ]
+    };
+    myChart_1.setOption(option);
+    // pie chart
+    var myChart_2 = echarts.init(document.getElementById('right'));
+    var option = {
+        legend: {
+            top: 'bottom'
+        },
+        toolbox: {
+            show: true,
+            feature: {
+                mark: {show: true},
+                dataView: {show: true, readOnly: false},
+                restore: {show: true},
+                saveAsImage: {show: true}
+            }
+        },
+        series: [
+            {
+                name: 'Trend values by classification',
+                type: 'pie',
+                radius: [50, 250],
+                center: ['50%', '50%'],
+                roseType: 'area',
+                label: {
+                    {#show: false, #}
+                    position: 'inner',
+                },
+                itemStyle: {
+                    borderRadius: 8,
+                },
+                data: countAndTypename
+            }
+        ]
+    }
+
+    // Display the chart with the configuration items and data you just specified.
+    myChart_2.setOption(option);
+</script>
+</body>
+</html>

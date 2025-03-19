@@ -1,0 +1,27 @@
+{% load static %}
+<div class="col-lg-3 col-12 mb-5">
+	<div class="myaccount-tab-menu nav" id="menuid">
+		<a href="/user/detail">Personal Centre</a>
+		<a href="/user/edit">Information Maintenance</a>
+		<a href="/user/password">Password Security</a>
+		<a href="/perform/booking/list">Booking</a>
+		<a href="/order/list">Orders</a>
+		<a href="/scorerecord/list">ScoreRecord</a>
+		<a href="/collection/list">Collection</a>
+		<a href="/comment/list">Comment</a>
+{#        <a href="/notice/list">Notice</a>#}
+	</div>
+</div>
+<script>
+	var pathname = pathname?pathname:"";//pathname is for multiple actions on a single page.
+	
+ 	window.onload = function(){
+    	$("#menuid").find("a").each(function(){
+			if($(this).attr("href")==window.location.pathname
+					|| $(this).attr("href")==pathname){
+				$(this).addClass("active");
+				return;
+			}
+		});
+ 	}
+</script>

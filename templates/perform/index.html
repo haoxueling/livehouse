@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <title>livehouse Booking System</title>
+    {% include '../common/css.html' %}
+    {% include '../common/js.html' %}
+</head>
+<body class="productsgrid-page">
+    {% include '../common/header.html' %}
+    {% include '../common/banner.html' %}
+    <div class="shop-page-layout section-padding-bottom">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <section class="section-title">
+                        <h3 class="title">Perform List</h3>
+                    </section>
+                </div>
+                <div class="col-12">
+                    <div class="row align-items-center" style="margin-bottom:20px">
+                        <div class="tag-clouds" id="myTab">
+                            <span class="widget-title" style="font-weight:500">Type of perform：</span>
+                            <a href="javascript:submitForm('')" class="tag-cloud-link type_all">All</a>
+                            {% for type in types %}
+                                <a href="javascript:submitForm({{ type.id }})" class="tag-cloud-link"
+                                    data-info='{{ type.id }}' title="{{ type.typename }}">{{ type.typename }}</a>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="tab-content">
+                        <div class="tab-pane show active">
+                            <div class="row grid-view mb-n5">
+                                {% if products %}
+                                    {% for product in products %}
+                                        <div class="col-sm-6 col-md-4 col-lg-3 mb-5" style="width:20%">
+                                            <div class="product-card">
+                                                <a href="/perform/event/detail?productid={{ product.id }}" title="{{ product.name }}"
+                                                    class="product-thumb" style="height:204px;overflow: hidden">
+                                                    <img src="{{ product.image.url }}"
+                                                        alt="{{ product.name }}" style="">
+                                                </a>
+                                                <div class="product-content">
+                                                    <h4>
+                                                        <a href="/perform/event/detail?productid={{ product.id }}" title="{{ product.name }}"
+                                                            class="product-title">
+                                                            {% if product.name|length > 8 %}
+                                                                {{ product.name|slice:'8' }}...
+                                                            {% else %} {{ product.name }} {% endif %}
+                                                        </a>
+                                                    </h4>
+                                                    <h5 style="font-size: 14px;">￥{{ product.price }}</h5>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    {% endfor %}
+                                {% else %}
+                                    No data available
+                                {% endif %}
+                                <form action="/perform/event/list" method="post" id="form">
+                                    {% csrf_token %}
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% include './hot.html' %}
+    {% if request.session.session_user_isLogin %}
+        {% include './recommend.html' %}
+    {% endif %}
+    {% include '../common/footer.html' %}
+</body>
+<script type="text/javascript">
+    var typeid = "{{ typeid }}";
+    if(typeid!=null && typeid!=""){
+        $("#myTab").find("a").each(function(){
+            if($(this).attr("data-info")==typeid){
+                $(this).addClass("active");
+                return false;
+            }
+        });
+    }else{
+        $(".type_all").addClass("active");
+    }
+    function submitForm(typeid){
+        $("#page").val(1);
+        $("#typeid").val(typeid);
+        $("#form").submit();
+    }
+</script>
+</html>

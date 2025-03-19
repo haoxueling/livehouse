@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <title>【My Collection】livehouse Booking System</title>
+    {% include '../common/css.html' %}
+    {% include '../common/js.html' %}
+</head>
+<body class="productsgrid-page">
+    {% include '../common/header.html' %}
+    {% include '../common/banner2.html' %}
+    <div class="whish-list-section section-padding-bottom">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <section class="section-title">
+                        <h3 class="title" style="border-bottom:0">Personal Information Centre</h3>
+                    </section>
+                </div>
+                {% include '../common/menu.html' %}
+                <div class="col-lg-9 col-12 mb-5">
+                    <div class="tab-content">
+                        <div class="tab-pane fade active show">
+                            <div class="myaccount-content">
+                                <div class="table-responsive">
+                                    <table class="table">
+                                        <thead class="thead-light">
+                                            <tr>
+                                                <th class="text-center" scope="col" style="background-color: #16BAAA">No.</th>
+                                                <th scope="col" style="width:65%;background-color: #16BAAA">Product Name</th>
+                                                <th scope="col" style="background-color: #16BAAA">CollectionTime</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% if pageBean %}
+                                                {% for collection in pageBean %}
+                                                    <tr>
+                                                        <td class="text-center">{{ forloop.counter }}</td>
+                                                        <td>
+                                                            <a href="/product/detail?productid={{ collection.productid.id }}"
+                                                            title="{{ collection.productid.productname }}" style="color: inherit;">{{ collection.productid.productname }}</a>
+                                                        </td>
+                                                        <td>{{ collection.createtime }}</td>
+                                                    </tr>
+                                                {% endfor %}
+                                            {% else %}
+                                                <tr><td colspan="3">No data available</td><tr>
+                                            {% endif %}
+                                        </tbody>
+                                    </table>
+                                    <form action="/collection/list" method="post" id="form">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="page" value="{{ page }}" id="page"/>
+                                    </form>
+                                    {% include '../common/page.html' %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% include '../common/footer.html' %}
+</body>
+</html>

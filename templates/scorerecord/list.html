@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <title>【ScoreRecord】livehouse Booking System</title>
+    {% include '../common/css.html' %}
+    {% include '../common/js.html' %}
+    <script src="{% static 'js/jquery.raty.min.js' %}"></script>
+</head>
+<body class="productsgrid-page">
+    {% include '../common/header.html' %}
+    {% include '../common/banner2.html' %}
+    <div class="whish-list-section section-padding-bottom">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <section class="section-title">
+                        <h3 class="title" style="border-bottom:0">Personal Information Centre</h3>
+                    </section>
+                </div>
+                {% include '../common/menu.html' %}
+                <div class="col-lg-9 col-12 mb-5">
+                    <div class="tab-content">
+                        <div class="tab-pane fade active show">
+                            <div class="myaccount-content">
+                                <div class="table-responsive">
+                                    <table class="table">
+                                        <thead class="thead-light">
+                                            <tr>
+                                                <th class="text-center" scope="col" style="background-color: #16BAAA">No.</th>
+                                                <th scope="col" style="width:50%;background-color: #16BAAA">Product Name</th>
+                                                <th scope="col" style="background-color: #16BAAA">Score</th>
+                                                <th scope="col" style="background-color: #16BAAA">ScoreTime</th>
+                                                <th class="text-center" scope="col" style="background-color: #16BAAA">Operation</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% if pageBean %}
+                                                {% for scorerecord in pageBean %}
+                                                    <tr>
+                                                        <td class="text-center">{{ forloop.counter }}</td>
+                                                        <td>
+                                                            <a href="/product/detail?productid={{ scorerecord.productid.id }}"
+                                                            title="{{ scorerecord.productid.productname }}" style="color: inherit;">{{ scorerecord.productid.productname }}</a>
+                                                        </td>
+                                                        <td>
+                                                            <div id="star_{{ scorerecord.id }}"></div>
+                                                            <script>
+                                                                $('#star_{{ scorerecord.id }}').raty(
+                                                                    {
+                                                                        score:parseFloat('{{ scorerecord.score }}'),
+                                                                        halfShow:true,
+                                                                        readOnly: true,
+                                                                        path: '/static/images',
+                                                                        hints: ['1score', '2score', '3score', '4score', '5score'],
+                                                                    }
+                                                                );
+                                                            </script>
+                                                        </td>
+                                                        <td>{{ scorerecord.createtime }}</td>
+                                                        <td class="text-center">
+                                                            <a href="javascript:doDelete({{ scorerecord.id }})" title="Delete">
+                                                                <span class="trash"><i class="ion-android-delete"></i></span>
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                {% endfor %}
+                                            {% else %}
+                                                <tr><td colspan="5">No data available</td><tr>
+                                            {% endif %}
+                                        </tbody>
+                                    </table>
+                                    <form action="/scorerecord/list" method="post" id="form">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="page" value="{{ page }}" id="page"/>
+                                    </form>
+                                    {% include '../common/page.html' %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% include '../common/footer.html' %}
+</body>
+<script type="text/javascript">
+    //Delete
+    function doDelete(id){
+        layer.confirm("Confirm Delete？",{icon:7,title:"Delete"},function(index){
+           layer.close(index);
+           var data = "recordid="+id+"&csrfmiddlewaretoken={{ csrf_token }}";
+           common_ajax_other("/scorerecord/delete",data);
+        });
+    }
+</script>
+</html>

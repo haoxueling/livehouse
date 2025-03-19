@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <title>【MyComments】livehouse Booking System</title>
+    {% include '../common/css.html' %}
+    {% include '../common/js.html' %}
+</head>
+<body class="productsgrid-page">
+    {% include '../common/header.html' %}
+    {% include '../common/banner2.html' %}
+    <div class="whish-list-section section-padding-bottom">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <section class="section-title">
+                        <h3 class="title" style="border-bottom:0">Personal Information Centre</h3>
+                    </section>
+                </div>
+                {% include '../common/menu.html' %}
+                <div class="col-lg-9 col-12 mb-5">
+                    <div class="tab-content">
+                        <div class="tab-pane fade active show">
+                            <div class="myaccount-content">
+                                <div class="table-responsive">
+                                    <table class="table">
+                                        <thead class="thead-light">
+                                            <tr>
+                                                <th class="text-center" scope="col">No.</th>
+                                                <th scope="col" style="width:30%">Product Name</th>
+                                                <th scope="col" style="width:30%">Comments</th>
+                                                <th scope="col">CommentTime</th>
+                                                <th scope="col">Operation</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% if pageBean %}
+                                                {% for comment in pageBean %}
+                                                    <tr>
+                                                        <td class="text-center">{{ forloop.counter }}</td>
+                                                        <td>
+                                                            <a href="/product/detail?productid={{ comment.productid.id }}"
+                                                            title="{{ comment.productid.productname }}" style="color: inherit;">{{ comment.productid.productname }}</a>
+                                                        </td>
+                                                        <td style="width:30%">
+                                                            {% if comment.content|length > 50 %}
+                                                                {{ comment.content|slice:'50' }}...
+                                                            {% else %} {{ comment.content }} {% endif %}
+                                                        </td>
+                                                        <td>{{ comment.createtime }}</td>
+                                                        <td>
+                                                            <a href="/comment/detail?commentid={{ comment.id }}" title="detail">
+                                                                <span class="trash"><i class="icon ion-ios-information"></i></span>
+                                                            </a>
+                                                            &nbsp;&nbsp;
+                                                            <a href="/comment/edit?commentid={{ comment.id }}" title="edit">
+                                                                <span class="trash"><i class="icon ion-edit"></i></span>
+                                                            </a>
+                                                            &nbsp;&nbsp;
+                                                            <a href="javascript:doDelete({{ comment.id }})" title="delete">
+                                                                <span class="trash"><i class="ion-android-delete"></i></span>
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                {% endfor %}
+                                            {% else %}
+                                                <tr><td colspan="5">No data available</td><tr>
+                                            {% endif %}
+                                        </tbody>
+                                    </table>
+                                    <form action="/comment/list" method="post" id="form">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="page" value="{{ page }}" id="page"/>
+                                    </form>
+                                    {% include '../common/page.html' %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% include '../common/footer.html' %}
+</body>
+</html>
+<script type="text/javascript">
+    //Delete
+    function doDelete(id){
+        layer.confirm("Confirm deletion？",{icon:7,title:"Delete"},function(index){
+           layer.close(index);
+           var data = "commentid="+id+"&csrfmiddlewaretoken={{ csrf_token }}";
+           common_ajax_other("/comment/delete",data);
+        });
+    }
+</script>

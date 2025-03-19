@@ -1,0 +1,36 @@
+<div class="col-12 mb-5">
+	<nav aria-label="Page navigation">
+		<ul class="pagination justify-content-center" style="line-height: 35px;">
+			<li class="page-item">
+				<span>Total:&nbsp;&nbsp;{{ pageBean.paginator.count }}&nbsp; pieces of data,&nbsp;&nbsp;{{ pageBean.paginator.num_pages }}page</span>
+			</li>
+			{% if pageBean.has_previous %}
+				<li class="page-item">
+					<a href="javascript:toPage(1)" class="page-link">&nbsp;&nbsp;first page &nbsp;&nbsp;</a>
+					&nbsp;&nbsp;
+					<a href="javascript:toPage({{ pageBean.previous_page_number }})" class="page-link">
+						&nbsp;&nbsp;<span class="ion-android-arrow-dropleft"></span>&nbsp;&nbsp;previous page&nbsp;&nbsp;
+					</a>
+				</li>
+            {% endif %}
+            <li class="page-item active">
+                <a href="javascript:toPage({{ pageBean.number }})" class="page-link">{{ pageBean.number }}</a>
+            </li>
+			{% if pageBean.has_next %}
+				<li class="page-item">
+					<a href="javascript:toPage({{ pageBean.next_page_number }})" class="page-link">
+						&nbsp;&nbsp;next page&nbsp;&nbsp;<span class="ion-android-arrow-dropright"></span>&nbsp;&nbsp;
+					</a>
+					&nbsp;&nbsp;
+					<a href="javascript:toPage({{ pageBean.paginator.num_pages }})" class="page-link">&nbsp;&nbsp;last page&nbsp;&nbsp;</a>
+				</li>
+			{% endif %}
+		</ul>
+	</nav>
+</div>
+<script>
+    function toPage(page){
+        $("#page").val(page);
+        $("#form").submit();
+    }
+</script>

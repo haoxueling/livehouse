@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <title>【OrderDetails】livehouse Booking System</title>
+    {% include '../common/css.html' %}
+    {% include '../common/js.html' %}
+</head>
+<body class="productsgrid-page">
+    {% include '../common/header.html' %}
+    {% include '../common/banner2.html' %}
+    <div class="whish-list-section section-padding-bottom">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <section class="section-title">
+                        <h3 class="title" style="border-bottom:0">Personal Information Centre</h3>
+                    </section>
+                </div>
+                {% include '../common/menu.html' %}
+                <div class="col-lg-9 col-12 mb-5">
+                    <div class="tab-content">
+                        <div class="tab-pane fade active show">
+                            <div class="myaccount-content">
+                                <div class="account-details-form">
+                                    <form action="" method="post">
+                                        <div class="row">
+                                            <div class="col-md-6" style="margin-bottom:25px">
+                                                <label class="text" style="display: inline-block;font-weight: 600;">Order No：</label>
+                                                {{ order.id }}
+                                            </div>
+                                            <div class="col-md-6" style="margin-bottom:25px;word-wrap: break-word; word-break: break-all;">
+                                                <label class="text" style="display: inline-block;font-weight: 600;">TotalPrice：</label>
+                                                ￥{{ order.totalprice }}
+                                            </div>
+                                            <div class="col-md-6" style="margin-bottom:25px">
+                                                <label class="text" style="display: inline-block;font-weight: 600;">BankName：</label>
+                                                {{ order.bankname|default_if_none:"" }}
+                                            </div>
+                                            <div class="col-md-6" style="margin-bottom:25px">
+                                                <label class="text" style="display: inline-block;font-weight: 600;">Card Number：</label>
+                                                {{ order.banknum|default_if_none:"" }}
+                                            </div>
+                                            <div class="col-md-6" style="margin-bottom:25px">
+                                                <label class="text" style="display: inline-block;font-weight: 600;">Phone：</label>
+                                                {{ order.phone }}
+                                            </div>
+                                            <div class="col-md-6" style="margin-bottom:25px">
+                                                <label class="text" style="display: inline-block;font-weight: 600;">Address：</label>
+                                                {{ order.address }}
+                                            </div>
+                                            <div class="col-md-6" style="margin-bottom:25px">
+                                                <label class="text" style="display: inline-block;font-weight: 600;">Order Status：</label>
+                                                {% for key,value in shareOrderStateParamsDic.items %}
+                                                    {% if key == order.state %}
+                                                        {{ value }}
+                                                    {% endif %}
+                                                {% endfor %}
+                                            </div>
+                                            <div class="col-md-6" style="margin-bottom:25px">
+                                                <label class="text" style="display: inline-block;font-weight: 600;">CreateTime：</label>
+                                                {{ order.createtime }}
+                                            </div>
+                                            <div class="col-md-6" style="margin-bottom:25px">
+                                                <label class="text" style="display: inline-block;font-weight: 600;">PayTime：</label>
+                                                {{ order.paytime|default_if_none:"" }}
+                                            </div>
+                                            <div class="col-md-6" style="margin-bottom:25px">
+                                                <label class="text" style="display: inline-block;font-weight: 600;">SendTime：</label>
+                                                {{ order.sendtime|default_if_none:"" }}
+                                            </div>
+                                            <div class="col-md-6" style="margin-bottom:25px">
+                                                <label class="text" style="display: inline-block;font-weight: 600;">ReceiveTime：</label>
+                                                {{ order.receivetime|default_if_none:"" }}
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="table-responsive">
+                                    <table class="table">
+                                        <thead class="thead-light">
+                                            <tr>
+                                                <th>No.</th>
+                                                <th colspan="2" style="width:40%">Product Name</th>
+                                                <th>Price</th>
+                                                <th>Quantity</th>
+                                                <th>TotalPrice</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% if orderitems %}
+                                                {% for orderitem in orderitems %}
+                                                    <tr>
+                                                        <td><span class="whish-list-price">{{ forloop.counter }}</span></td>
+                                                        <td>
+                                                            <a href="/product/detail?productid={{ orderitem.productid.id }}"
+                                                                title="{{ orderitem.productid.productname }}">
+                                                                <img src="{{ orderitem.productid.image.url }}"
+                                                                    alt="{{ orderitem.productid.productname }}" style="height:100px;overflow: hidden">
+                                                            </a>
+                                                        </td>
+                                                        <td>
+                                                            <a href="/product/detail?productid={{ orderitem.productid.id }}"
+                                                                title="{{ orderitem.productid.productname }}" style="color: inherit;">
+                                                                    {{ orderitem.productid.productname }}
+                                                            </a>
+                                                        </td>
+                                                        <td>￥{{ orderitem.price }}</td>
+                                                        <td>{{ orderitem.count }}</td>
+                                                        <td>￥{{ orderitem.totalprice }}</td>
+                                                    </tr>
+                                                {% endfor %}
+                                            {% else %}
+                                                <tr><td colspan="6">No data available</td><tr>
+                                            {% endif %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% include '../common/footer.html' %}
+</body>
+<script>
+    pathname = "/order/list";
+</script>
+</html>

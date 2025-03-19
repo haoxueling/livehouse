@@ -1,0 +1,52 @@
+<div class="shop-page-layout section-padding-bottom" style="margin-top: 25px;">
+	<div class="container">
+		<div class="row">
+			<div class="col-12">
+				<section class="section-title">
+					<h3 class="title">Hot Products</h3>
+				</section>
+			</div>
+			<div class="col-12">
+				<div class="tab-content">
+					<div class="tab-pane show active">
+						<div class="row grid-view mb-n5">
+							{% if hotProducts %}
+                                {% for product in hotProducts %}
+                                    <div class="col-sm-6 col-md-4 col-lg-3 mb-5" style="width:20%">
+                                        <div class="product-card">
+                                            <a href="/product/detail?productid={{ product.id }}" title="{{ product.productname }}"
+                                                class="product-thumb" style="height:204px;overflow: hidden">
+                                                <img src="{{ product.image.url }}"
+                                                    alt="{{ product.productname }}" style="">
+                                            </a>
+                                            <div class="product-content">
+                                                <h4>
+                                                    <a href="/product/detail?productid={{ product.id }}" title="{{ product.productname }}"
+                                                        class="product-title">
+                                                        {% if product.productname|length > 8 %}
+                                                            {{ product.productname|slice:'8' }}...
+                                                        {% else %} {{ product.productname }} {% endif %}
+                                                    </a>
+                                                </h4>
+                                                <h5 style="font-size: 14px;">￥{{ product.price }}</h5>
+                                            </div>
+                                            <ul class="actions actions-verticale">
+                                                <li class="action whish-list">
+                                                    <button class="addCart" type="button" data-itemid="{{ product.id }}">
+                                                        <i class="icon ion-bag"></i>
+                                                    </button>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            {% else %}
+                                No data available
+                            {% endif %}
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

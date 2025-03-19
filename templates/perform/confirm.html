@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <title>【BookingConfirmation】livehouse Booking System</title>
+    {% include '../common/css.html' %}
+    {% include '../common/js.html' %}
+</head>
+<body class="productsgrid-page">
+    {% include '../common/header.html' %}
+    {% include '../common/banner2.html' %}
+    <div class="whish-list-section section-padding-bottom">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <section class="section-title">
+                        <h3 class="title" style="border-bottom:0">Booking Confirmation</h3>
+                    </section>
+                </div>
+                <div class="col-6">
+                    <div class="col-12">
+                        <a style="width: 100%;height: 100%;display: block" href="/perform/event/detail?productid={{ ticket.id }}"
+                                            title="{{ ticket.name }}">
+                                            <img style="max-width: 100%;height: 100%;width: 100%;" src="{{ ticket.image.url }}"
+                                                alt="{{ ticket.name  }}" style="height:100px;overflow: hidden">
+                                        </a>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="col-12">
+                        <form class="personal-information" action="/perform/booking" method="post" id="form3">
+                            {% csrf_token %}
+                            <input name="ticket_id" hidden="hidden" value="{{ ticket.id }}">
+                            <div class="row">
+                                <div class="col-12 row align-items-center layui-font-18 mb-2">
+                                    <div class="col-3">Name:</div>
+                                    <div class="col-8 text-left overflow-hidden" style="text-overflow: ellipsis">{{ ticket.name }}</div>
+                                </div>
+                                <div class="col-12 row align-items-center layui-font-18 mb-2">
+                                    <div class="col-3">Price:</div>
+                                    <div class="col-8 text-left ">￥{{ ticket.price }}</div>
+                                </div>
+                                <div class="col-12 row align-items-center layui-font-18 mb-2">
+                                    <div class="col-3">CurrentBalance:</div>
+                                    <div class="col-8 text-left ">{{ moreTicket }} tickets</div>
+                                </div>
+                                <div class="col-12 row align-items-center layui-font-18 mb-5">
+                                    <div class="col-3">Time:</div>
+                                    <div class="col-8 text-left">{{ ticket.startTime }} ~ {{ ticket.endTime }}</div>
+                                </div>
+                                <div class="col-12 row align-items-center layui-font-18 mb-2">
+                                    <div class="your-order-area">
+                                        <div class="your-order-wrap gray-bg-4">
+                                            <div class="your-order-product-info">
+                                                <div class="billing-info-wrap">
+                                                    <h3 class="title">Pay</h3>
+                                                </div>
+                                                <div class="your-order-top mb-2">
+                                                    <ul>
+                                                        <li>Quantity：</li>
+                                                        <li>
+                                                            <label>
+                                                                <input class="layui-input" {% if moreTicket < 1 %}
+                                                                	disabled="disabled"
+                                                                {% endif %}  type="number" name="count" id="count" value="1" min="1" max="{{ moreTicket }}" oninput ="getPriceByCount()">
+                                                            </label>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                <div class="your-order-bottom">
+                                                    <ul>
+                                                        <li class="your-order-shipping">TotalPrice：</li>
+                                                        <li class="your-order-shipping" id="cartTotal">
+                                                            <label>
+                                                                <input type="text" name="total_price" placeholder="￥" autocomplete="off" class="layui-input" value="{{ ticket.price  }}">
+                                                            </label>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                <div class="Place-order" style="">
+                                                    <a class="btn btn-dark-ex me-3" href="javascript:submitOrder()" >
+                                                        &nbsp;&nbsp;SubmitOrder&nbsp;&nbsp;
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% include '../common/footer.html' %}
+</body>
+<script type="text/javascript">
+    //cartTotal
+    $(document).ready(function(){
+        var cartTotal = {{ ticket.price }}
+        $("#cartTotal input").val(cartTotal.toFixed(2));
+    });
+    //submitOrder
+    function submitOrder(){
+        let quantity = {{ moreTicket }}
+
+        if (quantity < 1){
+            layer.alert('Insufficient Tickets Left')
+        }else {
+            $("#form3").submit();
+        }
+    }
+
+    function getPriceByCount(){
+        let price = {{ ticket.price }}
+        let total = $('#count').val()
+        $("#cartTotal input").val((price * total).toFixed(2));
+    }
+</script>
+</html>

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <title>【Interaction】livehouse Booking System</title>
+    {% include '../common/css.html' %}
+    {% include '../common/js.html' %}
+</head>
+<body class="productsgrid-page">
+    {% include '../common/header.html' %}
+    {% include '../common/banner2.html' %}
+    <div class="whish-list-section section-padding-bottom">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <section class="section-title">
+                        <h3 class="title" style="border-bottom:0">Interaction</h3>
+                    </section>
+                </div>
+                <div class="col-lg-12 col-12 mb-5">
+                    <form class="layui-form" id="InteractionForm" action="/perform/interaction/submit" method="post">
+                            {% csrf_token %}
+                        <input type="text" hidden="hidden" value="{{ selectedId }}" name="selectedId">
+                        <div class="layui-col-md12">
+                              <select lay-search="" id="selectId" name="eventId">
+                                <option value="">Please select or search for events</option>
+                                  {% if events %}
+                                      {% for event in events %}
+                                          {% if selectedId  == event.id %}
+                                            <option value="{{ event.id }}" selected="selected" >
+                                            {{ event.name }}
+                                            </option>
+                                          {% else %}
+                                            <option value="{{ event.id }}" >
+                                            {{ event.name }}
+                                            </option>
+                                        {% endif %}
+                                      {% endfor %}
+                                  {% endif %}
+                              </select>
+                              <textarea name="interactionContent" id="interactionContent" placeholder="Please enter a message" class="layui-textarea mt-2"></textarea>
+                              <div class="layui-btn-container mt-2">
+                                  <button type="button" class="layui-btn" onclick="doSubmit()">Submit Message</button>
+                             </div>
+                          </div>
+                    </form>
+                </div>
+                <div class="col-lg-12 col-12 mb-5">
+                    {% if pageBean %}
+                        {% for pageData in pageBean %}
+                            <div class="layui-panel layui-bg-gray mb-2">
+                              <div style="padding: 10px;">
+                                  <div class="p-1 layui-font-16">{{ pageData.target.name }}</div>
+                                  <div class="p-1 layui-font-18 fw-bold"> {{ pageData.content }}</div>
+                                  <div class="p-1 layui-font-14">{{ pageData.createdTime }}</div>
+                                  <div class="p-1 layui-font-14">{{ pageData.user.username }}</div>
+                              </div>
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        <div class="layui-panel layui-bg-gray mb-2">
+                              <div style="padding: 30px;">
+                                  No data available
+                              </div>
+                        </div>
+                    {% endif %}
+                    <div class="layui-panel layui-bg-gray">
+                      <div style="padding: 10px;" class="d-flex align-items-center">
+                          <form action="/perform/interaction" method="get" id="form">
+                                {% csrf_token %}
+                                <input type="hidden" name="page" value="{{ page }}" id="page"/>
+                            </form>
+                            {% include '../common/page.html' %}
+                      </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        function doSubmit(){
+            if ($('#selectId').val() === '' || $('#interactionContent').val() === ''){
+                layer.alert('Please select activity or enter content')
+            }else {
+                $('#InteractionForm').submit()
+            }
+        }
+    </script>
+    {% include '../common/footer.html' %}
+</body>
+</html>
